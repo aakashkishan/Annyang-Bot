@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html ng-app="SpeechRecognitionTest">
+    <head>
+        <title>Angular App | Angular Page | Angular Check List</title>
+    </head>
+    <body>
+    	<!-- Import the angular.min.js from the CDN -->
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+
+        <!-- Importing Bootstrap from the CDN -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+        <script>
+        	
+        	//We create an instance of the Angular Controller after creating an AngularModule.
+        	angular.module('SpeechRecognitionTest', []).controller('SpeechRecognitionController' ['$life', function($life) {
+
+
+        		//We create a checkList array based on the scope or life of the controller.
+        		$life.checkList = [
+        			{
+        				'itemName': 'Learn Python', 
+        				'checked': false,
+        				'itemNumber': 101
+        			}
+        		]
+
+        		//We create a addCheckListItem method to add the item to the checkList.
+        		$life.addCheckListItem = function() {
+
+        		}
+
+				//We create a checkCheckListItem method to add the item to the checkList.
+        		$life.checkCheckListItem = function() {
+
+        		}        		
+
+        	}])
+
+
+
+
+        </script>
+
+        <div ng-controller="SpeechRecognitionController">
+        	
+	        <form name="checkList" ng-submit="addCheckListItem()">
+	        	<input type="text" name="newItem" ng-model="newItem" required>
+	        	<button class="btn btn-primary" ng-disabled = checkList.$invalid> Add Item </button> 
+	        </form>
+
+	        <button class="btn btn-danger" ng-click="checkCheckListItem()"> Check Item </button>
+
+	        <ul>
+	        	<li ng-repeat="item in checkList"> 
+	        		<input type="checkbox" ng-model="item.checked">
+	        		<!-- String Interpolation  -->
+	        		<span ng-class="{'checked': item.checked}"> {{item.itemName}} </span>
+	        		<!-- Number Interpolation  -->
+	        		<span class="badge"> {{item.itemNumber}} </span>
+	        	</li>
+	        </ul>
+
+        </div>
+        
+    </body>
+</html>
