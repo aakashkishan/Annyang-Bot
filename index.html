@@ -31,7 +31,7 @@
 
 	    <!-- Import Annyang Speech Recognition Library from the CDN -->
 	    <script src="https://cdnjs.cloudflare.com/ajax/libs/annyang/2.6.0/annyang.min.js"></script>
-	    
+
     </head>
     <body>
 
@@ -123,14 +123,25 @@
 
         		} 
 
-        		//To check whether the previous item has been added again as a new item.
-        		//The $scope.$watch is a single listener to handle all data changes like ajax calls, timeouts etc. 
-        		// $scope.$watch('CheckList', 
-        		// 	function(previousItem, addedItem) {
-        		// 		if (previousItem != addedItem) {
-        		// 			$scope.CheckList.push(addedItem);
-        		// 		}
-        		// 	}, true)       		
+        		//These are the commands to be given to annyang.
+        		var commands = {
+        			//Once it reads 'new item', the following words would be the itemName and the itemCode.
+        			'new item *text *code' : function(text, code) {
+        				//Add the obtained itemName and itemCode to the newItem object.
+        				$scope.newItem = text;
+        				$scope.newItemCode = code;
+        				//Add the newItem to the CheckList.
+        				$scope.addCheckListItem();
+        				$scope.$apply();
+        			}
+        		}
+
+        		//Annyang adds the commands to the queue.
+        		annyang.addCommands( commands );
+        		//Annayng gets the debugger console.
+        		annyang.debug();
+        		//Annyang starts the listening
+        		annyang.start();
 
         	}])
 

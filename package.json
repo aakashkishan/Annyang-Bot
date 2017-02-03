@@ -1,0 +1,30 @@
+{
+  "name": "annyang-bot",
+  "version": "1.0.0",
+  "description": "aSript Speech Recognition Library based Bot that responds to voice commands.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aakashkishan/Annyang-Bot.git"
+  },
+  "keywords": [
+    "Annyang",
+    "Bot",
+    "|",
+    "Speech",
+    "Recognition",
+    "|",
+    "JavaScript",
+    "Speech",
+    "Recognition"
+  ],
+  "author": "Aakash Kishan",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/aakashkishan/Annyang-Bot/issues"
+  },
+  "homepage": "https://github.com/aakashkishan/Annyang-Bot#readme"
+}
