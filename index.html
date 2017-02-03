@@ -36,10 +36,12 @@
 		        <form name="checkList" ng-submit="addCheckListItem()">
 		        	<input type="text" name="newItem" value="CheckListItem" ng-model="newItem" required>
 		        	<input type="text" name="newItemCode" value="CheckListItemCode" ng-model="newItemCode" required>
+		        	<!-- Add a new Check List Item. -->
 		        	<button class="btn btn-primary" ng-disabled = checkList.$invalid> Add Item </button> 
 		        </form>
 
-		        <button class="btn btn-danger" ng-click="checkCheckListItem()"> Check Item </button>
+		        <!-- Delete the checked Check List Items. -->
+		        <button class="btn btn-danger" ng-click="deleteCheckListItem()"> Delete Item </button>
 
 		        <hr />
 
@@ -93,10 +95,20 @@
         				'itemCode': $scope.newItemCode,
         			})
 
+        			//Re-Initialise the newItem and newItemCode.
+        			$scope.newItem = '';
+        			$scope.newItemCode = '';
+
         		}
 
-				//We create a checkCheckListItem method to add the item to the checkList.
-        		$scope.checkCheckListItem = function() {
+				//We create a deleteCheckListItem method to add the item to the checkList.
+        		$scope.deleteCheckListItem = function() {
+
+        			//Delete the Check List Items that are checked.
+        			//The filter method is used to filter the array CheckList based on the checked items.
+        			$scope.CheckList = $scope.CheckList.filter( function(value) {
+        				return !value.checked;
+        			})
 
         		}        		
 
