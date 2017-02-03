@@ -7,7 +7,12 @@
 			
 			.checked {
 				text-decoration: line-through;
-				color: #fff;
+				color: #000;
+			}
+
+			.itemList {
+			  list-style-type: none;
+			  width: 50%;
 			}
 
 		</style>
@@ -24,6 +29,9 @@
 	    <!-- Importing Bootstrap from the CDN -->
 	    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
+	    <!-- Import Annyang Speech Recognition Library from the CDN -->
+	    <script src="https://cdnjs.cloudflare.com/ajax/libs/annyang/2.6.0/annyang.min.js"></script>
+	    
     </head>
     <body>
 
@@ -45,8 +53,11 @@
 
 		        <hr />
 
-		        <ul>
-		        	<li ng-repeat="item in CheckList"> 
+		        <ul class="list-group itemList">
+		        	<!-- The statement in ng-repeat loops through the CheckList array and does it according to array's index -->
+		        	<li class="list-group-item" ng-repeat="item in CheckList track by $index"> 
+		        		<!-- Mark the CheckBoxes with their indexes to access them easily using annyang's speech recognition -->
+		        		{{$index + 1}}
 		        		<input type="checkbox" ng-model="item.checked">
 		        		<!-- String Interpolation  -->
 		        		<span ng-class="{'checked': item.checked}"> {{item.itemName}} </span>
@@ -110,7 +121,16 @@
         				return !value.checked;
         			})
 
-        		}        		
+        		} 
+
+        		//To check whether the previous item has been added again as a new item.
+        		//The $scope.$watch is a single listener to handle all data changes like ajax calls, timeouts etc. 
+        		// $scope.$watch('CheckList', 
+        		// 	function(previousItem, addedItem) {
+        		// 		if (previousItem != addedItem) {
+        		// 			$scope.CheckList.push(addedItem);
+        		// 		}
+        		// 	}, true)       		
 
         	}])
 
