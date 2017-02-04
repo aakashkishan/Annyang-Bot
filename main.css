@@ -1,0 +1,11 @@
+
+.checked {
+	text-decoration: line-through;
+	color: #000;
+}
+
+.itemList {
+  list-style-type: none;
+  width: 50%;
+}
+

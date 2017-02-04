@@ -1,21 +1,24 @@
+<!--
+*		A JavaScript Speech Recognition Library based Bot that responde to certain commands.
+*		
+*		INPUT COMMANDS:	a. 'new *itemName *itemCode'
+*						b. 'check *itemNumber'
+*						c. 'delete checked '
+*						d. 'remove *itemNumber'
+*		
+*		OUTPUT RESULTS: a. Adds a new Item List with specified itenmName and itemCode.
+*						b. Checks the checkBox for which the itemNumber is specified.
+*						c. Deletes the checked Check Boxes.
+*						d. Removes the checkBox for which the itemNumber is specified.
+-->
 <!DOCTYPE html>
 <html ng-app="SpeechRecognitionTest">
     <head>
         <title>Angular App | Angular Page | Angular Check List</title>
 
-		<style>
-			
-			.checked {
-				text-decoration: line-through;
-				color: #000;
-			}
-
-			.itemList {
-			  list-style-type: none;
-			  width: 50%;
-			}
-
-		</style>
+        <!-- Importing the external StyleSheet main.css -->
+        <!-- Here the properties and the styling are being imported from main.css -->
+        <link rel="stylesheet" href="./main.css">
 
 		<!-- Adding Favicon -->
 		<link rel="icon" href="https://www.w3.org/html/logo/downloads/HTML5_Badge_512.png" type="image/gif" sizes="16x16">
@@ -134,7 +137,7 @@
         				$scope.addCheckListItem();
         				$scope.$apply();
         			},
-        			//Once it reads 'check', the following words would be the itemNumber ( Strictly a number ).
+        			//Once it reads 'check', the following words would be the itemNumber ( strictly an Integer ).
         			'check *number' : function(number) {
         				//Parse the 'number' input into integer and then get 
         				//the CheckList number from the input that should be checked.
@@ -142,6 +145,21 @@
         				$scope.CheckList[value - 1].checked = true;
         				$scope.$apply();
         			},
+        			//Once it reads 'delete checked', the checked items will be deleted.
+        			'delete checked' : function() {
+        				//Delete the checked CheckBoxes on the command 'delete checked'.
+        				$scope.deleteCheckListItem();
+        				$scope.$apply();
+        			},
+        			//Once it reads 'remove', It'll listen for the checkBox number ( strictly an Integer ) and remove it from the CheckList.
+        			'remove *number' : function(number) {
+        				//Parse the 'number' input into integer and then remove 
+        				//the item for which the number is read.
+        				var value = parseInt(number);
+        				//splice() mwthod will remove that specified Item from the List and the Second Argument is the number of removals.
+        				$scope.CheckList.splice(value - 1, 1);
+        				$scope.$apply();
+        			} 
         		}
 
         		//Annyang adds the commands to the queue.
