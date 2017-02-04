@@ -20,7 +20,7 @@
 		<!-- Adding Favicon -->
 		<link rel="icon" href="https://www.w3.org/html/logo/downloads/HTML5_Badge_512.png" type="image/gif" sizes="16x16">
 
-		<!-- Import the angular.min.css from the CDN -->
+		<!-- Import the bootstrap.min.css from the CDN -->
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
 		<!-- Import the angular.min.js from the CDN -->
@@ -125,15 +125,23 @@
 
         		//These are the commands to be given to annyang.
         		var commands = {
-        			//Once it reads 'new item', the following words would be the itemName and the itemCode.
-        			'new item *text *code' : function(text, code) {
+        			//Once it reads 'new', the following words would be the itemName and the itemCode.
+        			'new *text *code' : function(text, code) {
         				//Add the obtained itemName and itemCode to the newItem object.
         				$scope.newItem = text;
         				$scope.newItemCode = code;
         				//Add the newItem to the CheckList.
         				$scope.addCheckListItem();
         				$scope.$apply();
-        			}
+        			},
+        			//Once it reads 'check', the following words would be the itemNumber ( Strictly a number ).
+        			'check *number' : function(number) {
+        				//Parse the 'number' input into integer and then get 
+        				//the CheckList number from the input that should be checked.
+        				var value = parseInt(number.toString());	
+        				$scope.CheckList[value - 1].checked = true;
+        				$scope.$apply();
+        			},
         		}
 
         		//Annyang adds the commands to the queue.
