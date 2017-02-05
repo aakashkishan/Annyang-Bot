@@ -44,7 +44,8 @@
 
     			<h3> A JavaScript Speech Recognition Bot </h3>
 
-    			<ul ng-if="speechDone()" class="nav nav-pills">
+    			<!-- A Bootstrap Nav Pill to Add and Delete with Voice Commands -->
+    			<ul ng-if="modifyNav()" class="nav nav-pills">
 				  <li role="presentation" class="active"><a href="#">Home</a></li>
 				  <li role="presentation"><a href="#">Profile</a></li>
 				  <li role="presentation"><a href="#">Messages</a></li>
@@ -61,6 +62,11 @@
 
 		        <!-- Delete the checked Check List Items. -->
 		        <button class="btn btn-danger" ng-click="deleteCheckListItem()"> Delete Item </button>
+
+		        <!-- A Bootstrap Button Badge to Add and Delete using Voice Commands -->
+		        <button ng-if="modifyBadge()" class="btn btn-primary" type="button">
+				  Messages <span class="badge">1</span>
+				</button>
 
 		        <hr />
 
@@ -171,13 +177,35 @@
         				$scope.CheckList.splice(value - 1, 1);
         				$scope.$apply();
         			},
+        			//A modifyNav() method to add a nav-pill using voice commands.
         			'add navigation' : function() {
-        				$scope.speechDone = function() {
+        				$scope.modifyNav = function() {
         					return true;
         				}
         				$scope.$apply();
         				
-        			} 
+        			} ,
+        			//A modifyNav() method to delete a nav-pill using voice commands.
+        			'delete navigation' : function() {
+        				$scope.modifyNav = function() {
+        					return false;
+        				}
+        				$scope.$apply();
+        			},
+        			//A modifyBadge() method to add a nav-pill using voice commands.
+        			'add button' : function() {
+        				$scope.modifyBadge = function() {
+        					return true;
+        				}
+        				$scope.$apply();
+        			},
+        			//A modifyBadge() method to delete a nav-pill using voice commands.
+        			'delete button' : function() {
+        				$scope.modifyBadge = function() {
+        					return false;
+        				}
+        				$scope.$apply();
+        			}
         		}
 
         		//Annyang adds the commands to the queue.
