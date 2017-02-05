@@ -43,6 +43,14 @@
 			<div class="container">
 
     			<h3> A JavaScript Speech Recognition Bot </h3>
+
+    			<ul ng-if="speechDone()" class="nav nav-pills">
+				  <li role="presentation" class="active"><a href="#">Home</a></li>
+				  <li role="presentation"><a href="#">Profile</a></li>
+				  <li role="presentation"><a href="#">Messages</a></li>
+				</ul>
+
+				<hr>
         	
 		        <form name="checkList" ng-submit="addCheckListItem()">
 		        	<input type="text" name="newItem" value="CheckListItem" ng-model="newItem" required>
@@ -68,6 +76,8 @@
 		        		<span ng-class="{'checked': item.checked}" class="badge"> {{item.itemCode}} </span>
 		        	</li>
 		        </ul>
+
+		        
 
 	        </div>
 
@@ -126,6 +136,7 @@
 
         		} 
 
+
         		//These are the commands to be given to annyang.
         		var commands = {
         			//Once it reads 'new', the following words would be the itemName and the itemCode.
@@ -159,6 +170,13 @@
         				//splice() mwthod will remove that specified Item from the List and the Second Argument is the number of removals.
         				$scope.CheckList.splice(value - 1, 1);
         				$scope.$apply();
+        			},
+        			'add navigation' : function() {
+        				$scope.speechDone = function() {
+        					return true;
+        				}
+        				$scope.$apply();
+        				
         			} 
         		}
 
