@@ -44,6 +44,11 @@
 
     			<h3> A JavaScript Speech Recognition Bot </h3>
 
+                <!-- A Bootstrap Header to Add and Delete wih Voice Commands -->
+                <div ng-if="modifyHead()" ng-repeat="head in Header" class="page-header">
+                  <h1 ng-model="newHeader">{{head.heading}}</h1>
+                </div>
+
     			<!-- A Bootstrap Nav Pill to Add and Delete with Voice Commands -->
     			<ul ng-if="modifyNav()" class="nav nav-pills">
 				  <li role="presentation" class="active"><a href="#">Home</a></li>
@@ -52,6 +57,12 @@
 				</ul>
 
 				<hr>
+
+                <!-- Bootstrap Alerts to Add and Delete with Voice Commands -->
+                <div ng-if="modifyAlertSuccess()" class="alert alert-success" role="alert">Bootstrap Alert Success</div>
+                <div ng-if="modifyAlertInfo()" class="alert alert-info" role="alert">Bootstrap Alert Info</div>
+                <div ng-if="modifyAlertWarning()" class="alert alert-warning" role="alert">Bootstrap Alert Warning</div>
+                <div ng-if="modifyAlertDanger()" class="alert alert-danger" role="alert">Bootstrap Alert Danger</div>
         	
 		        <form name="checkList" ng-submit="addCheckListItem()">
 		        	<input type="text" name="newItem" value="CheckListItem" ng-model="newItem" required>
@@ -116,6 +127,13 @@
         			}
         		]
 
+        		//We create a header array based on the scope or life of the controller.
+        		$scope.Header = [
+        			{
+        				'heading': ''
+        			}
+        		]
+
         		//We create a addCheckListItem method to add the item to the checkList.
         		$scope.addCheckListItem = function() {
 
@@ -125,7 +143,7 @@
         				'itemCode': $scope.newItemCode,
         			})
 
-        			//Re-Initialise the newItem and newItemCode.
+        			//Re-Initialise the newItem, newItemCode and newHeader.
         			$scope.newItem = '';
         			$scope.newItemCode = '';
 
@@ -141,6 +159,16 @@
         			})
 
         		} 
+
+        		//We create a addHeader() method to add the heading to the Header array.
+        		$scope.addHeader = function() {
+        			$scope.Header.push({
+                        'heading': $scope.newHeader
+                    })
+
+        			//Re-Initialising the newHeader
+                    $scope.newHeader = '';
+        		}
 
 
         		//These are the commands to be given to annyang.
@@ -205,7 +233,74 @@
         					return false;
         				}
         				$scope.$apply();
-        			}
+        			},
+                    //A modifyHead() method to add a header using voiced commands.
+                    'add header *text' : function(text) {
+                        
+                        //Add the obtained headerName to the newHeader object.
+                        $scope.newHeader = text;
+
+                        //Call the addHeader() method to get the heading added to the array.
+                        $scope.addHeader();
+
+                        //Splice the empty heading from the Header array.
+                        $scope.Header.splice(0, 1);
+
+                        $scope.modifyHead = function() {	
+                            return true;
+                        }
+                        $scope.$apply();
+                    },
+                    //A modifyHead() method to add a header using voiced commands.
+                    'delete header' : function() {
+                        $scope.modifyHead = function() {
+                            return false;
+                        }
+                        $scope.$apply();
+                    },
+                    //A modifyAlert() method to add a header using voice commands.
+                    'add alert success' : function() {
+                        $scope.modifyAlertSuccess = function() {
+                        	return true;
+                        }
+                        $scope.$apply();
+                    },
+                    'add alert info' : function() {
+                        $scope.modifyAlertInfo = function() {
+                        	return true;
+                        }
+                        $scope.$apply();
+                    },
+                    'add alert warning' : function() {
+                        $scope.modifyAlertInfo = function() {
+                        	return true;
+                        }
+                        $scope.$apply();
+                    },
+                    'add alert danger' : function() {
+                        $scope.modifyAlertDanger = function() {
+                        	return true;
+                        }
+                        $scope.$apply();
+                    },
+                    //A modifyHead() method to delete a header using voice commands.
+                    'delete alert' : function() {
+                        $scope.modifyAlertSuccess = function() {
+                            return false;
+                        }
+                        $scope.modifyAlertInfo = function() {
+                            return false;
+                        }
+                        $scope.modifyAlertWarning = function() {
+                            return false;
+                        }
+                        $scope.modifyAlertDanger = function() {
+                            return false;
+                        }
+                        $scope.$apply();
+                    }
+
+
         		}
 
         		//Annyang adds the commands to the queue.
